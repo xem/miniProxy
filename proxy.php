@@ -1,0 +1,1 @@
+<?php echo file_get_contents(preg_replace("/^.*?url=/","",$_SERVER['REQUEST_URI']));?>
