@@ -1,17 +1,21 @@
 miniProxy
 ===
 
-
-A tiny (86b) PHP proxy.
+A tiny PHP proxy
 
 ````php
-<?php echo file_get_contents(preg_replace("/^.*?url=/","",$_SERVER['REQUEST_URI']));?>
+<?php
+$url=preg_replace("/^.*?url=/","",$_SERVER['REQUEST_URI']);
+preg_match("/^https:\/\/.example.com/",$url,$matches);
+if($matches)readfile($url);
+?>
 ````
 
 - Can be used to get any file or XHR request from another domain, with or without HTTPS.
 - Can proxy any URL, even if it contains its own GET parameters.
 - Requires a PHP server (d'uh!)
 - NB: doesn't proxy the original headers or MIME-types. Only the data.
+- NB: to avoid security breaches, replace "example.com" on line 2 with your whitelisted target domain(s).
 
 ---
 
