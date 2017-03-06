@@ -5,10 +5,9 @@ A tiny PHP proxy
 
 ````php
 <?php
-$url=preg_replace("/^.*?url=/","",$_SERVER['REQUEST_URI']);
-preg_match("/^https?:\/\/example.com/",$url,$matches);
-if($matches)readfile($url);
-?>
+if (preg_match("{^https?://example.com/}", $url = @$_GET['url'])) {
+  readfile($url);
+}
 ````
 
 - Can be used to get any file or XHR request from another domain, with or without HTTPS.
@@ -24,7 +23,7 @@ Usage:
 ````js
 // AJAX
 x = new XMLHttpRequest();
-x.open("GET", "proxy.php?url={url}", true);
+x.open("GET", "proxy.php?url=" + encodeURIComponent(url), true);
 x.send(null);
 
 ````
@@ -34,7 +33,7 @@ x.send(null);
 <img src="proxy.php?url={url}/image.gif">
 
 <!-- video -->
-<video src="proxy.php?url={url}/image.gif">
+<video src="proxy.php?url={url}/image.mp4">
 
 <!-- binary file download -->
 <a download="file.zip" href="proxy.php?url={url}/file.zip">download</a>
